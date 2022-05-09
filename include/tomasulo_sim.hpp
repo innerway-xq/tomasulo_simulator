@@ -40,6 +40,8 @@ public:
     void print_reversation_stations();
     //打印寄存器
     void print_registers();
+    //打印参数
+    void show_parameters();
     
     void show();
     //流出

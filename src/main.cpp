@@ -2,6 +2,7 @@
 #include <sstream>
 #include <cstring>
 #include <fstream>
+#include <windows.h>
 #include "tomasulo_sim.hpp"
 
 using namespace std;
@@ -26,6 +27,8 @@ void parse_path(string &x)
 
 int main()
 {
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 0x0f);
+
     tomasulo_sim ts;
     ts.reg[2].value.rvalue = 5;
     ts.reg[3].value.rvalue = 10;

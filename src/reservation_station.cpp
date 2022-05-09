@@ -9,7 +9,7 @@ void reservation_station::print(int ld_n, int add_sub_n, int mul_div_n)
         printf("%d\t%s\t%.3lf\t%.3lf\t", t, op.c_str(), vj.fvalue, vk.fvalue);
         if (qj)
         {
-            SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_GREEN);
+            SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 0x0b);
             if (qj > 0 && qj <= ld_n)
             {
                 printf("Load%d\t", qj);
@@ -22,13 +22,13 @@ void reservation_station::print(int ld_n, int add_sub_n, int mul_div_n)
             {
                 printf("MULT%d\t", qj - ld_n - add_sub_n);
             }
-            SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_BLUE | FOREGROUND_GREEN | FOREGROUND_RED);
+            SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 0x0f);
         }
         else
             printf("%d\t", qj);
         if (qk)
         {
-            SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_GREEN);
+            SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 0x0b);
             if (qk > 0 && qk <= ld_n)
             {
                 printf("Load%d\t", qk);
@@ -41,7 +41,7 @@ void reservation_station::print(int ld_n, int add_sub_n, int mul_div_n)
             {
                 printf("MULT%d\t", qk - ld_n - add_sub_n);
             }
-            SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_BLUE | FOREGROUND_GREEN | FOREGROUND_RED);
+            SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 0x0f);
         }
         else
             printf("%d\t", qk);
@@ -52,7 +52,7 @@ void reservation_station::print(int ld_n, int add_sub_n, int mul_div_n)
         printf("%d\t%s\t%d\t%d\t", t, op.c_str(), vj.rvalue, vk.rvalue);
         if (qj)
         {
-            SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_GREEN);
+            SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 0x0b);
             if (qj > 0 && qj <= ld_n)
             {
                 printf("Load%d\t", qj);
@@ -65,13 +65,13 @@ void reservation_station::print(int ld_n, int add_sub_n, int mul_div_n)
             {
                 printf("MULT%d\t", qj - ld_n - add_sub_n);
             }
-            SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_BLUE | FOREGROUND_GREEN | FOREGROUND_RED);
+            SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 0x0f);
         }
         else
             printf("%d\t", qj);
         if (qk)
         {
-            SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_GREEN);
+            SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 0x0b);
             if (qk > 0 && qk <= ld_n)
             {
                 printf("Load%d\t", qk);
@@ -84,7 +84,7 @@ void reservation_station::print(int ld_n, int add_sub_n, int mul_div_n)
             {
                 printf("MULT%d\t", qk - ld_n - add_sub_n);
             }
-            SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_BLUE | FOREGROUND_GREEN | FOREGROUND_RED);
+            SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 0x0f);
         }
         else
             printf("%d\t", qk);

@@ -83,9 +83,9 @@ void tomasulo_sim::load_instructions(const char *filename)
 void tomasulo_sim::print_instructions()
 {
     string tmp[4] = {"instructions", "issue", "execute", "write"};
-    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_BLUE);
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 0x0a);
     printf("   %s\t\t%s     %s   %s\n", tmp[0].c_str(), tmp[1].c_str(), tmp[2].c_str(), tmp[3].c_str());
-    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_BLUE | FOREGROUND_GREEN | FOREGROUND_RED);
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 0x0f);
     for (instruction i : iq)
     {
         i.print();
@@ -95,16 +95,16 @@ void tomasulo_sim::print_instructions()
 void tomasulo_sim::print_reversation_stations()
 {
     string tmp[9] = {"name", "t", "OP", "Vj", "Vk", "Qj", "Qk", "A", "Busy"};
-    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_BLUE);
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 0x0a);
     for (int i = 0; i < 9; ++i)
     {
         printf("%s\t", tmp[i].c_str());
     }
-    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_BLUE | FOREGROUND_GREEN | FOREGROUND_RED);
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 0x0f);
     printf("\n");
     for (int r = 0; r < (ld_n + add_sub_n + mul_div_n); ++r)
     {
-        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_GREEN);
+        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 0x0b);
         if (r >= 0 && r < ld_n)
         {
             printf("Load%d\t", r + 1);
@@ -117,9 +117,9 @@ void tomasulo_sim::print_reversation_stations()
         {
             printf("MULT%d\t", r + 1 - ld_n - add_sub_n);
         }
-        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_BLUE | FOREGROUND_GREEN | FOREGROUND_RED);
+        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 0x0f);
 
-        rvs[r].print(ld_n,add_sub_n,mul_div_n);
+        rvs[r].print(ld_n, add_sub_n, mul_div_n);
     }
 }
 
@@ -127,14 +127,14 @@ void tomasulo_sim::print_registers()
 {
     for (int k = 0; k < reg_r_n / line_reg_n; k++)
     {
-        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_RED);
+        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 0x0e);
         for (int i = k * line_reg_n; i < (k + 1) * line_reg_n; ++i)
         {
             char tmp[10];
             sprintf(tmp, "R%d\0", i);
             cout << setw(wid_reg) << tmp;
         }
-        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_BLUE | FOREGROUND_GREEN | FOREGROUND_RED);
+        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 0x0f);
         printf("\n");
         for (int i = k * line_reg_n; i < (k + 1) * line_reg_n; ++i)
         {
@@ -145,7 +145,7 @@ void tomasulo_sim::print_registers()
             }
             else
             {
-                SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_GREEN);
+                SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 0x0b);
                 if (reg[i].qi > 0 && reg[i].qi <= ld_n)
                 {
                     sprintf(tmp, "Ld%d", reg[i].qi);
@@ -161,19 +161,19 @@ void tomasulo_sim::print_registers()
                     sprintf(tmp, "MUL%d", reg[i].qi - ld_n - add_sub_n);
                     cout << setw(4) << tmp;
                 }
-                SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_BLUE | FOREGROUND_GREEN | FOREGROUND_RED);
+                SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 0x0f);
             }
         }
         printf("\n");
     }
-    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_RED);
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 0x0e);
     for (int i = (reg_r_n / line_reg_n) * line_reg_n; i < reg_r_n; ++i)
     {
         char tmp[10];
         sprintf(tmp, "R%d\0", i);
         cout << setw(wid_reg) << tmp;
     }
-    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_BLUE | FOREGROUND_GREEN | FOREGROUND_RED);
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 0x0f);
     if (reg_r_n % line_reg_n)
         printf("\n");
     for (int i = int(reg_r_n / line_reg_n) * line_reg_n; i < reg_r_n; ++i)
@@ -185,7 +185,7 @@ void tomasulo_sim::print_registers()
         }
         else
         {
-            SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_GREEN);
+            SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 0x0b);
             if (reg[i].qi > 0 && reg[i].qi <= ld_n)
             {
                 sprintf(tmp, "Ld%d", reg[i].qi);
@@ -201,7 +201,7 @@ void tomasulo_sim::print_registers()
                 sprintf(tmp, "MUL%d", reg[i].qi - ld_n - add_sub_n);
                 cout << setw(4) << tmp;
             }
-            SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_BLUE | FOREGROUND_GREEN | FOREGROUND_RED);
+            SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 0x0f);
         }
     }
     if (reg_r_n % line_reg_n)
@@ -209,14 +209,14 @@ void tomasulo_sim::print_registers()
 
     for (int k = 0; k < reg_f_n / line_reg_n; k++)
     {
-        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_RED);
+        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 0x0e);
         for (int i = k * line_reg_n; i < (k + 1) * line_reg_n; ++i)
         {
             char tmp[10];
             sprintf(tmp, "F%d\0", i);
             cout << setw(wid_reg) << tmp;
         }
-        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_BLUE | FOREGROUND_GREEN | FOREGROUND_RED);
+        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 0x0f);
         printf("\n");
         for (int i = reg_r_n + k * line_reg_n; i < reg_r_n + (k + 1) * line_reg_n; ++i)
         {
@@ -227,7 +227,7 @@ void tomasulo_sim::print_registers()
             }
             else
             {
-                SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_GREEN);
+                SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 0x0b);
                 if (reg[i].qi > 0 && reg[i].qi <= ld_n)
                 {
                     sprintf(tmp, "Ld%d", reg[i].qi);
@@ -243,19 +243,19 @@ void tomasulo_sim::print_registers()
                     sprintf(tmp, "MUL%d", reg[i].qi - ld_n - add_sub_n);
                     cout << setw(wid_reg) << tmp;
                 }
-                SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_BLUE | FOREGROUND_GREEN | FOREGROUND_RED);
+                SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 0x0f);
             }
         }
         printf("\n");
     }
-    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_RED);
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 0x0e);
     for (int i = int(reg_f_n / line_reg_n) * line_reg_n; i < reg_f_n; ++i)
     {
         char tmp[10];
         sprintf(tmp, "F%d\0", i);
         cout << setw(wid_reg) << tmp;
     }
-    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_BLUE | FOREGROUND_GREEN | FOREGROUND_RED);
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 0x0f);
     if (reg_f_n % line_reg_n)
         printf("\n");
     for (int i = reg_r_n + int(reg_f_n / line_reg_n) * line_reg_n; i < reg_r_n + reg_f_n; ++i)
@@ -269,24 +269,24 @@ void tomasulo_sim::print_registers()
         {
             if (reg[i].qi > 0 && reg[i].qi <= ld_n)
             {
-                SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_GREEN);
+                SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 0x0b);
                 sprintf(tmp, "Ld%d", reg[i].qi);
                 cout << setw(wid_reg) << tmp;
-                SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_BLUE | FOREGROUND_GREEN | FOREGROUND_RED);
+                SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 0x0f);
             }
             else if (reg[i].qi > ld_n && reg[i].qi <= (ld_n + add_sub_n))
             {
-                SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_GREEN);
+                SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 0x0b);
                 sprintf(tmp, "ADD%d", reg[i].qi - ld_n);
                 cout << setw(wid_reg) << tmp;
-                SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_BLUE | FOREGROUND_GREEN | FOREGROUND_RED);
+                SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 0x0f);
             }
             else if (reg[i].qi > (ld_n + add_sub_n) && reg[i].qi <= (ld_n + add_sub_n + mul_div_n))
             {
-                SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_GREEN);
+                SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 0x0b);
                 sprintf(tmp, "MUL%d", reg[i].qi - ld_n - add_sub_n);
                 cout << setw(wid_reg) << tmp;
-                SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_BLUE | FOREGROUND_GREEN | FOREGROUND_RED);
+                SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 0x0f);
             }
         }
     }
@@ -294,9 +294,23 @@ void tomasulo_sim::print_registers()
         printf("\n");
 }
 
+void tomasulo_sim::show_parameters()
+{
+    string head[3] = {"instruction", "delay", "num"};
+    string ins_tmp[5] = {"L.D", "ADD.D", "SUB.D", "MULT.D", "DIV.D"};
+    printf("%s\t%s\t%s\n", head[0].c_str(), head[1].c_str(), head[2].c_str());
+    printf("%s\t\t%d\t%d\t\n", ins_tmp[0].c_str(), ld_t, ld_n);
+    printf("%s\t\t%d\t%d\t\n", ins_tmp[1].c_str(), add_t, add_sub_n);
+    printf("%s\t\t%d\t%d\t\n", ins_tmp[2].c_str(), sub_t, add_sub_n);
+    printf("%s\t\t%d\t%d\t\n", ins_tmp[3].c_str(), mul_t, mul_div_n);
+    printf("%s\t\t%d\t%d\t\n", ins_tmp[4].c_str(), div_t, mul_div_n);
+}
+
 void tomasulo_sim::show()
 {
     printf("clock: %d\n", t);
+    printf("-------------------------------------------------------------------\n");
+    show_parameters();
     printf("-------------------------------------------------------------------\n");
     print_registers();
     printf("-------------------------------------------------------------------\n");
