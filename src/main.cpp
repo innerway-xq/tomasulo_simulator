@@ -69,6 +69,7 @@ int main()
             {
                 printf("xqts - tomasulo simulator by xq\n"
                        "Usage:\n"
+                       "  only enter                     step by step\n\n"
                        "  [OPTION...]\n\n"
                        "  l, load [file]                 load instructions\n"
                        "  reset                          reset everything\n"
@@ -144,6 +145,7 @@ int main()
             else if (!strcmp(usr_argv[0], "reset"))
             {
                 ts.reset();
+                ts.show();
             }
             else if (!strcmp(usr_argv[0], "c") || !strcmp(usr_argv[0], "change"))
             {
@@ -192,7 +194,7 @@ int main()
                         ts.cdb.itn_num.resize(ts.ld_n + ts.add_sub_n + ts.mul_div_n, 0);
                     }
                 }
-                else if (!strcmp(usr_argv[1], "MUL.D"))
+                else if ((!strcmp(usr_argv[1], "MULT.D")) || (!strcmp(usr_argv[1], "MUL.D")))
                 {
                     if (!strcmp(usr_argv[2], "delay"))
                     {
@@ -222,6 +224,7 @@ int main()
                         ts.cdb.itn_num.resize(ts.ld_n + ts.add_sub_n + ts.mul_div_n, 0);
                     }
                 }
+                ts.show_parameters();
             }
         }
     }

@@ -31,16 +31,6 @@ void tomasulo_sim::reset()
     memset(mem, 0, sizeof(mem));
     pc = 0;
     t = 0;
-    ld_t = 2;
-    add_t = 3;
-    sub_t = 3;
-    div_t = 41;
-    mul_t = 11;
-    ld_n = 2;
-    add_sub_n = 3;
-    mul_div_n = 2;
-    reg_f_n = 32;
-    reg_r_n = 32;
 }
 
 void tomasulo_sim::load_instructions(const char *filename)
@@ -588,11 +578,11 @@ bool tomasulo_sim::step()
     int issue_r;
     vector<int> execute_r;
     issue_r = issue();
-    cout << "issued" << endl;
+    // cout << "issued" << endl;
     execute_r = execute();
-    cout << "executed" << endl;
+    // cout << "executed" << endl;
     write_result();
-    cout << "writed" << endl;
+    // cout << "writed" << endl;
     if (issue_r != -1)
         rvs[issue_r].busy = true;
     for (int i : execute_r)
