@@ -79,7 +79,7 @@ int main()
                        "  r, run                         run\n"
                        "  save [file]                    save to file\n"
                        "  set <reg/mem> [position] [value]\n"
-                       "                                 set memory\n" // TODO: to be finished
+                       "                                 set memory/register\n" // TODO: to be finished
                        "  c, change [instruction] <delay/num> [integer]\n"
                        "                                 change parameters\n"
                        "  q,quit                         quit\n"

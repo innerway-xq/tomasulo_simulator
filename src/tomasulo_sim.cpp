@@ -344,10 +344,7 @@ int tomasulo_sim::issue()
         }
         else
         {
-            if (r < 32)
-                rvs[r].vj.rvalue = reg[rs].value.rvalue;
-            else
-                rvs[r].vj.fvalue = reg[rs].value.fvalue;
+            rvs[r].vj = reg[rs].value;
             rvs[r].qj = 0;
         }
         reg[rd].qi = r + 1;
@@ -386,10 +383,7 @@ int tomasulo_sim::issue()
         }
         else
         {
-            if (r < 32)
-                rvs[r].vj.rvalue = reg[rs].value.rvalue;
-            else
-                rvs[r].vj.fvalue = reg[rs].value.fvalue;
+            rvs[r].vj = reg[rs].value;
             rvs[r].qj = 0;
         }
         if (reg[rt].qi)
@@ -398,10 +392,7 @@ int tomasulo_sim::issue()
         }
         else
         {
-            if (r < 32)
-                rvs[r].vk.rvalue = reg[rt].value.rvalue;
-            else
-                rvs[r].vk.fvalue = reg[rt].value.fvalue;
+            rvs[r].vk = reg[rt].value;
             rvs[r].qk = 0;
         }
         reg[rd].qi = r + 1;
@@ -439,10 +430,7 @@ int tomasulo_sim::issue()
         }
         else
         {
-            if (r < 32)
-                rvs[r].vj.rvalue = reg[rs].value.rvalue;
-            else
-                rvs[r].vj.fvalue = reg[rs].value.fvalue;
+            rvs[r].vj = reg[rs].value;
             rvs[r].qj = 0;
         }
         if (reg[rt].qi)
@@ -451,10 +439,7 @@ int tomasulo_sim::issue()
         }
         else
         {
-            if (r < 32)
-                rvs[r].vk.rvalue = reg[rt].value.rvalue;
-            else
-                rvs[r].vk.fvalue = reg[rt].value.fvalue;
+            rvs[r].vk = reg[rt].value;
             rvs[r].qk = 0;
         }
 
