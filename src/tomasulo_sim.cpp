@@ -8,7 +8,7 @@
 
 using namespace std;
 
-extern const int line_reg_n = 16;
+extern int line_reg_n = 16;
 extern const int wid_reg = 6;
 
 tomasulo_sim::tomasulo_sim()
@@ -33,14 +33,14 @@ void tomasulo_sim::reset()
     t = 0;
 }
 
-void tomasulo_sim::load_instructions(const char *filename)
+bool tomasulo_sim::load_instructions(const char *filename)
 {
     ifstream fin;
     fin.open(filename, ios::in);
     if (!fin)
     {
         cout << "open " << filename << " failed" << endl;
-        return;
+        return false;
     }
     string temp;
     for (;;)
@@ -68,6 +68,7 @@ void tomasulo_sim::load_instructions(const char *filename)
         }
     }
     fin.close();
+    return true;
 }
 
 void tomasulo_sim::print_instructions()
@@ -118,7 +119,7 @@ void tomasulo_sim::print_registers()
     for (int k = 0; k < reg_r_n / line_reg_n; k++)
     {
         SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 0x0e);
-        for (int i = k * line_reg_n; i < (k + 1) * line_reg_n; ++i)
+        for (int i = k * line_reg_n; i < (k + 1) * line_reg_n; i++)
         {
             char tmp[10];
             sprintf(tmp, "R%d\0", i);
@@ -126,7 +127,7 @@ void tomasulo_sim::print_registers()
         }
         SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 0x0f);
         printf("\n");
-        for (int i = k * line_reg_n; i < (k + 1) * line_reg_n; ++i)
+        for (int i = k * line_reg_n; i < (k + 1) * line_reg_n; i++)
         {
             char tmp[10];
             if (!reg[i].qi)
@@ -157,7 +158,7 @@ void tomasulo_sim::print_registers()
         printf("\n");
     }
     SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 0x0e);
-    for (int i = (reg_r_n / line_reg_n) * line_reg_n; i < reg_r_n; ++i)
+    for (int i = (reg_r_n / line_reg_n) * line_reg_n; i < reg_r_n; i++)
     {
         char tmp[10];
         sprintf(tmp, "R%d\0", i);
@@ -166,7 +167,7 @@ void tomasulo_sim::print_registers()
     SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 0x0f);
     if (reg_r_n % line_reg_n)
         printf("\n");
-    for (int i = int(reg_r_n / line_reg_n) * line_reg_n; i < reg_r_n; ++i)
+    for (int i = int(reg_r_n / line_reg_n) * line_reg_n; i < reg_r_n; i++)
     {
         char tmp[10];
         if (!reg[i].qi)
@@ -197,10 +198,12 @@ void tomasulo_sim::print_registers()
     if (reg_r_n % line_reg_n)
         printf("\n");
 
+    line_reg_n *= 2;
+
     for (int k = 0; k < reg_f_n / line_reg_n; k++)
     {
         SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 0x0e);
-        for (int i = k * line_reg_n; i < (k + 1) * line_reg_n; ++i)
+        for (int i = k * line_reg_n; i < (k + 1) * line_reg_n; i += 2)
         {
             char tmp[10];
             sprintf(tmp, "F%d\0", i);
@@ -208,7 +211,7 @@ void tomasulo_sim::print_registers()
         }
         SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 0x0f);
         printf("\n");
-        for (int i = reg_r_n + k * line_reg_n; i < reg_r_n + (k + 1) * line_reg_n; ++i)
+        for (int i = reg_r_n + k * line_reg_n; i < reg_r_n + (k + 1) * line_reg_n; i += 2)
         {
             char tmp[10];
             if (!reg[i].qi)
@@ -239,7 +242,7 @@ void tomasulo_sim::print_registers()
         printf("\n");
     }
     SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 0x0e);
-    for (int i = int(reg_f_n / line_reg_n) * line_reg_n; i < reg_f_n; ++i)
+    for (int i = int(reg_f_n / line_reg_n) * line_reg_n; i < reg_f_n; i += 2)
     {
         char tmp[10];
         sprintf(tmp, "F%d\0", i);
@@ -248,7 +251,7 @@ void tomasulo_sim::print_registers()
     SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 0x0f);
     if (reg_f_n % line_reg_n)
         printf("\n");
-    for (int i = reg_r_n + int(reg_f_n / line_reg_n) * line_reg_n; i < reg_r_n + reg_f_n; ++i)
+    for (int i = reg_r_n + int(reg_f_n / line_reg_n) * line_reg_n; i < reg_r_n + reg_f_n; i += 2)
     {
         char tmp[10];
         if (!reg[i].qi)
@@ -282,6 +285,7 @@ void tomasulo_sim::print_registers()
     }
     if (reg_f_n % line_reg_n)
         printf("\n");
+    line_reg_n /= 2;
 }
 
 void tomasulo_sim::show_parameters()
@@ -298,16 +302,17 @@ void tomasulo_sim::show_parameters()
 
 void tomasulo_sim::show()
 {
+    string dividing_line = "-------------------------------------------------------------------------------------------------\n";
     printf("clock: %d\n", t);
-    printf("-------------------------------------------------------------------\n");
+    printf("%s", dividing_line.c_str());
     show_parameters();
-    printf("-------------------------------------------------------------------\n");
+    printf("%s", dividing_line.c_str());
     print_registers();
-    printf("-------------------------------------------------------------------\n");
+    printf("%s", dividing_line.c_str());
     print_instructions();
-    printf("-------------------------------------------------------------------\n");
+    printf("%s", dividing_line.c_str());
     print_reversation_stations();
-    printf("-------------------------------------------------------------------\n");
+    printf("%s", dividing_line.c_str());
     return;
 }
 

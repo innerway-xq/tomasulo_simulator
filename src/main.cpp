@@ -7,6 +7,7 @@
 
 using namespace std;
 
+
 void parse_path(string &x)
 {
     for (int i = 0; i < x.size(); ++i)
@@ -30,10 +31,11 @@ int main()
     SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 0x0f);
 
     tomasulo_sim ts;
+
     ts.reg[2].value.rvalue = 5;
     ts.reg[3].value.rvalue = 10;
     ts.mem[39].fvalue = 7.7;
-    ts.mem[55].fvalue = 39.0;
+    ts.mem[55].fvalue = 2.2;
 
     for (;;)
     {
@@ -70,14 +72,14 @@ int main()
                 printf("xqts - tomasulo simulator by xq\n"
                        "Usage:\n"
                        "  only enter                     step by step\n\n"
-                       "  [OPTION...]\n\n"
+                       "  [OPTION...]\n"
                        "  l, load [file]                 load instructions\n"
                        "  reset                          reset everything\n"
                        "  s, step                        step by step\n"
                        "  r, run                         run\n"
                        "  save [file]                    save to file\n"
                        "  set <reg/mem> [position] [value]\n"
-                       "                                 set memory\n"      // TODO: to be finished
+                       "                                 set memory\n" // TODO: to be finished
                        "  c, change [instruction] <delay/num> [integer]\n"
                        "                                 change parameters\n"
                        "  q,quit                         quit\n"
@@ -87,8 +89,8 @@ int main()
             {
                 string tmp = usr_argv[1];
                 parse_path(tmp);
-                ts.load_instructions(tmp.c_str());
-                ts.show();
+                if (ts.load_instructions(tmp.c_str()))
+                    ts.show();
             }
             else if (!strcmp(usr_argv[0], "s") || !strcmp(usr_argv[0], "step"))
             {
@@ -225,6 +227,40 @@ int main()
                     }
                 }
                 ts.show_parameters();
+            }
+            else if (!strcmp(usr_argv[0], "set")){
+                if (!strcmp(usr_argv[1], "reg")){
+                    int reg_tmp;
+                    if(usr_argv[2][0] == 'R'){
+                        reg_tmp = strtol(usr_argv[2]+1,NULL,10);
+                        if(reg_tmp >= ts.reg_r_n){
+                            cout<<"no such register"<<endl;
+                            continue;
+                        }
+                        ts.reg[reg_tmp].value.rvalue = strtoll(usr_argv[3],NULL,10);
+                    }
+                    else if (usr_argv[2][0] == 'F'){
+                        reg_tmp = strtol(usr_argv[2] + 1, NULL, 10) + ts.reg_r_n;
+                        if (reg_tmp >= ts.reg_r_n + ts.reg_f_n)
+                        {
+                            cout << "no such register" << endl;
+                            continue;
+                        }
+                        ts.reg[reg_tmp].value.fvalue = strtod(usr_argv[3], NULL);
+                    }
+                    ts.print_registers();
+                }
+                else if (!strcmp(usr_argv[1], "mem")){
+                    int pos = strtol(usr_argv[2],NULL,10);
+                    if(strstr(usr_argv[3],".")){
+                        ts.mem[pos].fvalue = strtod(usr_argv[3],NULL);
+                        printf("MEM[%d] = %lf\n",pos,ts.mem[pos].fvalue);
+                    }
+                    else{
+                        ts.mem[pos].rvalue = strtoll(usr_argv[3],NULL,10);
+                        printf("MEM[%d] = %lld\n",pos,ts.mem[pos].rvalue);
+                    }
+                }
             }
         }
     }

@@ -33,7 +33,7 @@ public:
     //重置
     void reset();
     //载入命令
-    void load_instructions(const char *filename);
+    bool load_instructions(const char *filename);
     //打印命令状态
     void print_instructions();
     //打印保留站
