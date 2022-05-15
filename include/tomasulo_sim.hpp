@@ -15,7 +15,7 @@ public:
     value_t mem[10000];
 
     int pc = 0;
-    int t=0;
+    int t=0;//时钟
     bool done_flag = false;
 
     int ld_t = 2;

@@ -61,3 +61,8 @@ void instruction::print()
     }
     printf("\n");
 }
+
+void instruction::reset(){
+    state = 0;
+    state1_t = state2_st = state2_end = state3_t = 0;
+}

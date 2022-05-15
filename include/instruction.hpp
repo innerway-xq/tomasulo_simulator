@@ -15,5 +15,6 @@ public:
     int state2_st = 0,state2_end = 0;
 
     void print();
+    void reset();
 };
 #endif

@@ -4,6 +4,6 @@
 class register_station{
 public:
     int qi = 0;
-    value_t value;
+    value_t value = {0};
 };
 #endif

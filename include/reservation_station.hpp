@@ -8,7 +8,7 @@ class reservation_station
 public:
     string op = "";
     int qj = 0, qk = 0;
-    value_t vj, vk;
+    value_t vj = {0}, vk = {0};
     bool busy = false;
     long long a = 0;
 

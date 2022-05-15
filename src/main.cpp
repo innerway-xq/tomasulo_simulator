@@ -7,7 +7,7 @@
 
 using namespace std;
 
-
+// 处理文件路径
 void parse_path(string &x)
 {
     for (int i = 0; i < x.size(); ++i)
@@ -71,7 +71,7 @@ int main()
             {
                 printf("xqts - tomasulo simulator by xq\n"
                        "Usage:\n"
-                       "  only enter                     step by step\n\n"
+                       " *only enter                     step by step\n\n"
                        "  [OPTION...]\n"
                        "  l, load [file]                 load instructions\n"
                        "  reset                          reset everything\n"
@@ -79,7 +79,7 @@ int main()
                        "  r, run                         run\n"
                        "  save [file]                    save to file\n"
                        "  set <reg/mem> [position] [value]\n"
-                       "                                 set memory/register\n" // TODO: to be finished
+                       "                                 set memory/register\n"
                        "  c, change [instruction] <delay/num> [integer]\n"
                        "                                 change parameters\n"
                        "  q,quit                         quit\n"
@@ -261,6 +261,10 @@ int main()
                         printf("MEM[%d] = %lld\n",pos,ts.mem[pos].rvalue);
                     }
                 }
+            }
+            else{
+                cout<<"invalid option!"<<endl;
+                continue;
             }
         }
     }

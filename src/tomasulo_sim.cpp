@@ -16,21 +16,23 @@ tomasulo_sim::tomasulo_sim()
     rvs.resize(ld_n + add_sub_n + mul_div_n, reservation_station());
     reg.resize(reg_f_n + reg_r_n, register_station());
     cdb.rvs_ava.resize(ld_n + add_sub_n + mul_div_n, false);
-    cdb.result.resize(ld_n + add_sub_n + mul_div_n);
+    cdb.result.resize(ld_n + add_sub_n + mul_div_n,{0});
     cdb.itn_num.resize(ld_n + add_sub_n + mul_div_n, 0);
 }
 
 void tomasulo_sim::reset()
 {
-    iq.clear();
-    rvs.resize(ld_n + add_sub_n + mul_div_n, reservation_station());
-    reg.resize(reg_f_n + reg_r_n, register_station());
-    cdb.rvs_ava.resize(ld_n + add_sub_n + mul_div_n, false);
-    cdb.result.resize(ld_n + add_sub_n + mul_div_n);
-    cdb.itn_num.resize(ld_n + add_sub_n + mul_div_n, 0);
-    memset(mem, 0, sizeof(mem));
+    for(vector<instruction>::iterator it = iq.begin();it != iq.end(); ++it)
+        it->reset();
+    rvs.assign(ld_n + add_sub_n + mul_div_n, reservation_station());
+    reg.assign(reg_f_n + reg_r_n, register_station());
+    cdb.rvs_ava.assign(ld_n + add_sub_n + mul_div_n, false);
+    cdb.result.assign(ld_n + add_sub_n + mul_div_n,{0});
+    cdb.itn_num.assign(ld_n + add_sub_n + mul_div_n, 0);
+    //memset(mem, 0, sizeof(mem));
     pc = 0;
     t = 0;
+    done_flag = false;
 }
 
 bool tomasulo_sim::load_instructions(const char *filename)
