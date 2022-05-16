@@ -6,6 +6,7 @@
 #include <iostream>
 #include <string>
 
+extern int instructions_state_color = 0xf0;
 void instruction::print()
 {
     if (name != "L.D"){
@@ -36,7 +37,7 @@ void instruction::print()
     }
     for (int i = 1; i <= state; ++i)
     {
-        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 0xf0);
+        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), instructions_state_color);
         if (i == 2)
         {
             std::cout << state2_st;

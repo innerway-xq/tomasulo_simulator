@@ -2,6 +2,7 @@
 #define INSTRUCTION_H_
 #include <string>
 using std::string;
+extern int instructions_state_color;
 class instruction
 {
 public:

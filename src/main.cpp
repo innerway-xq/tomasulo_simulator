@@ -3,6 +3,7 @@
 #include <cstring>
 #include <fstream>
 #include <windows.h>
+#include <conio.h>
 #include "tomasulo_sim.hpp"
 
 using namespace std;
@@ -76,7 +77,7 @@ int main()
                        "  l, load [file]                 load instructions\n"
                        "  reset                          reset everything\n"
                        "  s, step                        step by step\n"
-                       "  r, run                         run\n"
+                       "  r, run                         run (pause when any keyboard hit)\n"
                        "  save [file]                    save to file\n"
                        "  set <reg/mem> [position] [value]\n"
                        "                                 set memory/register\n"
@@ -109,11 +110,17 @@ int main()
                 }
             }
             else if (!strcmp(usr_argv[0], "r") || !strcmp(usr_argv[0], "run"))
-            {
+            {   
+                if (ts.iq.size() == 0)
+                {
+                    cout << "no instructions! please load instructions." << endl;
+                    continue;
+                }
                 ts.show();
                 _sleep(1000);
                 for (;;)
                 {
+                    if(kbhit()) break;
                     if (ts.iq.size() == 0)
                     {
                         cout << "no instructions! please load instructions." << endl;
@@ -140,7 +147,9 @@ int main()
                 string tmp = usr_argv[1];
                 parse_path(tmp);
                 FILE *fp = freopen(tmp.c_str(), "w", stdout);
+                instructions_state_color = 0x0f;
                 ts.show();
+                instructions_state_color = 0xf0;
                 fclose(fp);
                 freopen("CON", "w", stdout);
             }
