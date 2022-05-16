@@ -85,7 +85,7 @@ void tomasulo_sim::print_instructions()
     }
 }
 
-void tomasulo_sim::print_reversation_stations()
+void tomasulo_sim::print_reservation_stations()
 {
     string tmp[9] = {"name", "t", "OP", "Vj", "Vk", "Qj", "Qk", "A", "Busy"};
     SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 0x0a);
@@ -304,17 +304,32 @@ void tomasulo_sim::show_parameters()
 
 void tomasulo_sim::show()
 {
-    string dividing_line = "-------------------------------------------------------------------------------------------------\n";
     printf("clock: %d\n", t);
-    printf("%s", dividing_line.c_str());
+
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 0x0d);
+    printf("----------------------------------[ parameter ]----------------------------------------\n");
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 0x0f);
     show_parameters();
-    printf("%s", dividing_line.c_str());
+
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 0x0d);
+    printf("----------------------------------[ registers ]----------------------------------------\n");
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 0x0f);
     print_registers();
-    printf("%s", dividing_line.c_str());
+
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 0x0d);
+    printf("---------------------------------[ instructions ]--------------------------------------\n");
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 0x0f);
     print_instructions();
-    printf("%s", dividing_line.c_str());
-    print_reversation_stations();
-    printf("%s", dividing_line.c_str());
+
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 0x0d);
+    printf("-----------------------------[ reversation stations ]----------------------------------\n");
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 0x0f);
+    print_reservation_stations();
+
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 0x0d);
+    printf("---------------------------------------------------------------------------------------\n");
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 0x0f);
+
     return;
 }
 

@@ -37,7 +37,7 @@ public:
     //打印命令状态
     void print_instructions();
     //打印保留站
-    void print_reversation_stations();
+    void print_reservation_stations();
     //打印寄存器
     void print_registers();
     //打印参数
