@@ -45,12 +45,15 @@ public:
     
     void show();
     //流出
+    //返回值：流出指令所用的保留站号，若无法流出则返回-1
     int issue();
     //执行
+    //返回值：此时钟cdb上变为可用的保留站号
     vector<int> execute();
     //写结果
     void write_result();
     //单步前进
+    //返回值：true-程序未结束，false-程序已结束
     bool step();
 };
 #endif

@@ -6,7 +6,7 @@
 #include <iostream>
 #include <string>
 
-extern int instructions_state_color = 0xf0;
+extern int instructions_state_color = 0x70;
 void instruction::print()
 {
     if (name != "L.D"){

@@ -75,11 +75,11 @@ int main()
                        " *only enter                     step by step\n\n"
                        "  [OPTION...]\n"
                        "  l, load [file]                 load instructions\n"
-                       "  reset                          reset everything\n"
+                       "  reset                          reset\n"
                        "  s, step                        step by step\n"
                        "  r, run                         run (pause when any keyboard hit)\n"
                        "  save [file]                    save to file\n"
-                       "  set <reg/mem> [position] [value]\n"
+                       "  set <reg/mem> [reg_name/position] [value]\n"
                        "                                 set memory/register\n"
                        "  c, change [instruction] <delay/num> [integer]\n"
                        "                                 change parameters\n"
@@ -88,6 +88,10 @@ int main()
             }
             else if (!strcmp(usr_argv[0], "l") || !strcmp(usr_argv[0], "load"))
             {
+                if(usr_argc == 1){
+                    cout<<"please give a file path!"<<endl;
+                    continue;
+                }
                 string tmp = usr_argv[1];
                 parse_path(tmp);
                 if (ts.load_instructions(tmp.c_str()))
@@ -144,12 +148,17 @@ int main()
             }
             else if (!strcmp(usr_argv[0], "save"))
             {
+                if (usr_argc == 1)
+                {
+                    cout << "please give a file path!" << endl;
+                    continue;
+                }
                 string tmp = usr_argv[1];
                 parse_path(tmp);
                 FILE *fp = freopen(tmp.c_str(), "w", stdout);
                 instructions_state_color = 0x0f;
                 ts.show();
-                instructions_state_color = 0xf0;
+                instructions_state_color = 0x70;
                 fclose(fp);
                 freopen("CON", "w", stdout);
             }
@@ -160,6 +169,11 @@ int main()
             }
             else if (!strcmp(usr_argv[0], "c") || !strcmp(usr_argv[0], "change"))
             {
+                if (usr_argc < 4)
+                {
+                    cout << "invalid option!" << endl;
+                    continue;
+                }
                 if (!strcmp(usr_argv[1], "L.D"))
                 {
                     if (!strcmp(usr_argv[2], "delay"))
@@ -238,6 +252,11 @@ int main()
                 ts.show_parameters();
             }
             else if (!strcmp(usr_argv[0], "set")){
+                if (usr_argc < 4)
+                {
+                    cout << "invalid option!" << endl;
+                    continue;
+                }
                 if (!strcmp(usr_argv[1], "reg")){
                     int reg_tmp;
                     if(usr_argv[2][0] == 'R'){
@@ -246,7 +265,13 @@ int main()
                             cout<<"no such register"<<endl;
                             continue;
                         }
-                        ts.reg[reg_tmp].value.rvalue = strtoll(usr_argv[3],NULL,10);
+                        if (strstr(usr_argv[3], ".")){
+                            cout<<"Ri is an interger register!!"<<endl;
+                            continue;
+                        }
+                        else{
+                            ts.reg[reg_tmp].value.rvalue = strtoll(usr_argv[3], NULL, 10);
+                        }
                     }
                     else if (usr_argv[2][0] == 'F'){
                         reg_tmp = strtol(usr_argv[2] + 1, NULL, 10) + ts.reg_r_n;
